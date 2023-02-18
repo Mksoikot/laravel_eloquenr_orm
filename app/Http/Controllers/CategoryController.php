@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -43,15 +44,17 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
-        ],[
-            'name.required'=>'Name Field is Required',
-            'description.required'=>'Description Field is Required',
-        ]);
+        // Form Validation
+        $request->validated();
+        // $request->validate([
+        //     'name' => 'required|max:255',
+        //     'description' => 'required',
+        // ],[
+        //     'name.required'=>'Name Field is Required',
+        //     'description.required'=>'Description Field is Required',
+        // ]);
          // Option 1
         // $data['name'] = $request->name;
         // $data['description'] = $request->description;
@@ -63,6 +66,10 @@ class CategoryController extends Controller
             'name'=>$request->name,
             'description'=>$request->description
         ]);
+        // Option 1
+        // $request->session()->flash('success', 'Category Add successful!');
+        // Option 2
+        $request->session()->flash('success', 'Category Add successful!');
         return redirect()->route('categories.index');
     }
 
@@ -111,8 +118,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(StoreCategoryRequest $request, Category $category)
     {
+        // Form Validation
+        $request->validated();
         // Option 1
         // $data['name'] = $request->name;
         // $data['description'] = $request->description;
