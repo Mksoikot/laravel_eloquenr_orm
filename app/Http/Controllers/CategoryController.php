@@ -45,9 +45,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
+        ],[
+            'name.required'=>'Name Field is Required',
+            'description.required'=>'Description Field is Required',
         ]);
          // Option 1
         // $data['name'] = $request->name;
